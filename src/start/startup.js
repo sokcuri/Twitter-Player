@@ -3,6 +3,7 @@ var {app, BrowserWindow, session, ipcMain} = electron;
 var {MonkeyPatch} = require('./sokcuri');
 var path = require('path');
 var util = require('util');
+var chalk = require('chalk');
 
 app.on('ready', () => {
     // Monkey patch to BrowserWindow Constructor
@@ -14,18 +15,18 @@ app.on('ready', () => {
 
             // Config Object
             var config = {
-                preload: args[0].webPreferences.preload,
-                userAgent: session.defaultSession.getUserAgent()
+                preload: args[0].webPreferences.preload
             }
 
             // Argument passing to Renderer Process (using base64 enc)
             var argument_base64 = Buffer.from(JSON.stringify(config)).toString('base64');
 
             // override preload setting
+            args[0] = args[0] || {};
             args[0].webPreferences = args[0].webPreferences || {};
             args[0].webPreferences.blinkFeatures = args[0].webPreferences.blinkFeatures || '';
             args[0].webPreferences.blinkFeatures = `${args[0].webPreferences.blinkFeatures},--config-object:${argument_base64}`;
-            args[0].webPreferences.preload = path.join(__dirname, '../', 'renderer', 'init.js');
+            args[0].webPreferences.preload = path.join(__dirname, '..', 'renderer', 'init.js');
 
             // Call Original BrowserWindow constructor
             let browserWindow = new (Function.prototype.bind.apply(base, [{},...args]));
@@ -40,37 +41,31 @@ app.on('ready', () => {
                     e.preventDefault();
                 }
             });
+            message('BrowserWindow Monkey-patching completed', 'main');
 
             return browserWindow;
-        },
-
-        function () {
-            console.log("test");
         }
-);
+    );
 
-var Module = require('module');
-var originalRequire = Module.prototype.require;
-
-Module.prototype.require = function(arg){
-  //console.log(arguments);
-//  if (arg == "electron") return;
-  //do your thing here
-  return originalRequire.apply(this, arguments);
-};
-    let SpecialS = function () {
-
-    }
+    message('Create BrowserWindow', 'main');
     let mainWindow;
     global.sharedObj = {prop1: 'asdf', prop2: () => { return "asdf";}};
     mainWindow = new BrowserWindow({width: 800, height: 800,
         webPreferences: {
-            preload: path.join(__dirname, '../', 'renderer', 'preload.js'),
+            preload: path.join(__dirname, '..', 'renderer', 'preload.js'),
         }
     });
     mainWindow.loadURL('https://twitter.com');
 });
 
-ipcMain.on('Global.Message', (evt, arg) => {
-    console.log(arg);
+const message = function (msg, target) {
+    target = target || '';
+    if (target == 'main')
+        target = `${chalk.gray('[')}${chalk.blue('Main')}${chalk.gray(']')}\x20`;
+    if (target == 'renderer')
+        target = `${chalk.gray('[')}${chalk.red('Renderer')}${chalk.gray(']')}\x20`;
+    console.log('%s%s', target, msg);
+}
+ipcMain.on('Global.Message', (evt, msg, target) => {
+    message(msg, target);
 });

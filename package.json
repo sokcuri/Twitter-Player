@@ -9,6 +9,7 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "chalk": "^2.0.1",
     "electron": "^1.6.11"
   }
 }
