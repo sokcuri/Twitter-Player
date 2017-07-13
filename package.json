@@ -1,0 +1,14 @@
+{
+  "name": "electron_playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/start/startup.js",
+  "scripts": {
+    "start": "electron ./src/start/startup.js"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "electron": "^1.6.11"
+  }
+}
