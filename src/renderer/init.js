@@ -18,7 +18,7 @@ process.argv.forEach(arg => {
         try
         {
             let base64Text = arg.substr(len + param_name.length);
-            configObj = JSON.parse(new Buffer(base64Text, 'base64').toString('utf8'));
+            configObj = JSON.parse(Buffer.from(base64Text, 'base64').toString('utf8'));
         }
         catch(e) {
             main.message(`config-object parameter parsing failed: ${e.message}`);

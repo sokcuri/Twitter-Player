@@ -6,10 +6,11 @@ var util = require('util');
 
 app.on('ready', () => {
     // Monkey patch to BrowserWindow Constructor
-    BrowserWindow = MonkeyPatch(BrowserWindow, {
-        constructed: function () {
+    BrowserWindow = MonkeyPatch(BrowserWindow,
+        function () {
             // Argument
-            var args = [].slice.call(arguments);
+            var args = Array.from(arguments);
+            var base = args.splice(args.length - 1, 1)[0];            
 
             // Config Object
             var config = {
@@ -18,7 +19,7 @@ app.on('ready', () => {
             }
 
             // Argument passing to Renderer Process (using base64 enc)
-            var argument_base64 = new Buffer(JSON.stringify(config)).toString('base64');
+            var argument_base64 = Buffer.from(JSON.stringify(config)).toString('base64');
 
             // override preload setting
             args[0].webPreferences = args[0].webPreferences || {};
@@ -27,7 +28,7 @@ app.on('ready', () => {
             args[0].webPreferences.preload = path.join(__dirname, '../', 'renderer', 'init.js');
 
             // Call Original BrowserWindow constructor
-            let browserWindow = new (Function.prototype.bind.apply(require('electron').BrowserWindow, [{}].concat(args)));
+            let browserWindow = new (Function.prototype.bind.apply(base, [{},...args]));
 
             /* Fix to Electron */
             // electron cannot post redirect request
@@ -41,8 +42,12 @@ app.on('ready', () => {
             });
 
             return browserWindow;
+        },
+
+        function () {
+            console.log("test");
         }
-});
+);
 
 var Module = require('module');
 var originalRequire = Module.prototype.require;
