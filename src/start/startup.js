@@ -17,15 +17,17 @@ app.on('ready', () => {
                 userAgent: session.defaultSession.getUserAgent()
             }
 
+            // Argument passing to Renderer Process (using base64 enc)
+            var argument_base64 = new Buffer(JSON.stringify(config)).toString('base64');
+
             // override preload setting
             args[0].webPreferences = args[0].webPreferences || {};
+            args[0].webPreferences.blinkFeatures = args[0].webPreferences.blinkFeatures || '';
+            args[0].webPreferences.blinkFeatures = `${args[0].webPreferences.blinkFeatures},--config-object:${argument_base64}`;
             args[0].webPreferences.preload = path.join(__dirname, '../', 'renderer', 'init.js');
 
             // Call Original BrowserWindow constructor
             let browserWindow = new (Function.prototype.bind.apply(require('electron').BrowserWindow, [{}].concat(args)));
-
-            // Argument passing to Renderer Process (using base64 enc)
-            browserWindow.webContents.session.setUserAgent(new Buffer(JSON.stringify(config)).toString('base64'));
 
             /* Fix to Electron */
             // electron cannot post redirect request
@@ -58,7 +60,7 @@ Module.prototype.require = function(arg){
     global.sharedObj = {prop1: 'asdf', prop2: () => { return "asdf";}};
     mainWindow = new BrowserWindow({width: 800, height: 800,
         webPreferences: {
-            preload: path.join(__dirname, '../', 'renderer', 'preload.js')
+            preload: path.join(__dirname, '../', 'renderer', 'preload.js'),
         }
     });
     mainWindow.loadURL('https://twitter.com');

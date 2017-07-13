@@ -9,13 +9,25 @@ var main = {
 }
 
 let currentWindow = remote.getCurrentWindow();
-let configObj = JSON.parse(new Buffer(currentWindow.webContents.session.getUserAgent(), 'base64').toString('utf8'));
+let configObj;
+
+process.argv.forEach(arg => {
+    let param_name = '--config-object:';
+    let len = arg.indexOf(param_name);
+    if (len != -1) {
+        try
+        {
+            let base64Text = arg.substr(len + param_name.length);
+            configObj = JSON.parse(new Buffer(base64Text, 'base64').toString('utf8'));
+        }
+        catch(e) {
+            main.message(`config-object parameter parsing failed: ${e.message}`);
+        }
+    }
+});
 
 main.message(`load preload script - ${configObj.preload}`);
 require(configObj.preload);
-
-main.message(`revert userAgent string - ${configObj.userAgent}`);
-currentWindow.webContents.session.setUserAgent(configObj.userAgent);
 
 ipcRenderer.on('Renderer.redirect-url', function(event, url) {
     window.location.assign(url);
