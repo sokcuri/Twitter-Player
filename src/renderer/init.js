@@ -93,8 +93,9 @@ try {
 finally {
     // revert to overrided function when dom content loaded
     document.addEventListener('DOMContentLoaded', function () {
-        //global.console.log = renderer.log;
-        //global.console.error = renderer.error;
+        // if comment below two code lines, can't enter login page (infinite-loading)
+        global.console.log = renderer.log;
+        global.console.error = renderer.error;
 
         const printResourceUsage = function () {
             Object.entries(webFrame.getResourceUsage()).forEach(item => {
