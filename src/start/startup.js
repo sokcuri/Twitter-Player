@@ -6,6 +6,7 @@ var path = require('path');
 var util = require('util');
 var request = require('request');
 var dns = require('dns');
+var mime = require('mime');
 
 // overrides application name
 app.setName('TweetDeck Player');
@@ -58,7 +59,7 @@ app.on('ready', () => {
                     }
                     message(`[magenta]twimg[reset] ${requestURL.hostname}(${ttl}) [grey]${res.statusCode}[reset] ${mimeType} [brightWhite]${requestURL.href}[reset]`, 'protocol')
                     callback({
-                        mimeType: mimeType,
+                        mimeType: mimeType || mime.lookup(requestURL.href),
                         data: data || Buffer.from('')
                     });
                 });
@@ -98,7 +99,7 @@ app.on('ready', () => {
                     mimeType = mimeType.substr(0, mimeType.lastIndexOf(';'));
                 message(`[cyan]sokcuri[reset] [grey]${res.statusCode}[reset] ${mimeType} [brightWhite]${requestURL.href}[reset]`, 'protocol')
                 callback({
-                    mimeType: mimeType,
+                    mimeType: mimeType || mime.lookup(requestURL.href),
                     data: data || Buffer.from('')
                 });
             });
