@@ -5,6 +5,7 @@ global.main = require('./main');
 // sokcuri protocol bypass
 webFrame.registerURLSchemeAsPrivileged('twimg');
 webFrame.registerURLSchemeAsPrivileged('sokcuri');
+webFrame.registerURLSchemeAsPrivileged('http');
 
 // renderer object
 global.renderer = {

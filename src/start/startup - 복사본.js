@@ -11,6 +11,66 @@ var mime = require('mime');
 // overrides application name
 app.setName('TweetDeck Player');
 
+// http server
+var fs = require('fs');
+var http = require('http');
+var url = require('url');
+var ROOT_DIR = "html/";
+var dnsList = [];
+var server = http.createServer(function (req, res) {
+
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+    dns.resolve4('pbs.twimg.com', {ttl: true}, (err, dnsRes) => {
+        if (!err) {
+            dnsRes.forEach(res => {
+                if (dnsList.indexOf(res.address) == -1)
+                    dnsList.push(res.address);
+            });
+        }
+    });
+
+    let startTime = new Date();
+    var requestURL = url.parse(req.url.substr(1), true, false);
+    
+    req.headers = req.headers || {};
+    delete req.headers['Content-Encoding'];
+    
+    if (dnsList.length) {
+        let seq = Math.floor((Math.random() * dnsList.length));
+        req.headers['Host'] = requestURL.hostname;
+        requestURL.hostname = dnsList[seq];
+    }
+
+    let contentLength = 0;
+    let contentType = 'N/A';
+    request({
+        encoding: null,
+        method: req.method,
+        uri: requestURL.href,
+        headers: req.headers
+    }, function (error, response, body) {
+        if (error) {
+            res.end();
+        }
+    })
+    .on('response', function(response) {
+        res.writeHead(response.statusCode, response.headers);
+    })
+    .on('data', function(data) { // decompressed data
+        res.write(data);
+        contentLength += data.length;
+    })
+    .on('end', function () {
+        res.end();
+        let elapsedTime = ((contentLength / (new Date() - startTime)) * 1024 / 1000);
+        elapsedTime = (elapsedTime > 1024) ? '[brightRed]' + (elapsedTime / 1000).toFixed(2) + 'mb/s' : elapsedTime.toFixed(2) + 'kb/s';
+        message(`[magenta]twimg[reset] [brightCyan]${elapsedTime}[reset] ${requestURL.hostname} [grey]${res.statusCode}[reset] [brightWhite]${requestURL.href}[reset]`, 'protocol');
+    })
+
+}).listen(8080, 'localhost', 511, function () {
+    message(`port ${server.address().port} open`)
+});
+
 // disable disk cache
 app.commandLine.appendSwitch('disable-http-cache', true);
 
@@ -22,23 +82,25 @@ app.on('ready', () => {
 
     dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-    var dnsList = [];
+    var dnsList = {};
     protocol.registerBufferProtocol('twimg', (req, callback) => {
-        dns.resolve4('pbs.twimg.com', {ttl: true}, (err, dnsRes) => {
+        let requestURL = new URL(req.url.substr('twimg://'.length));
+        let hostname = requestURL.hostname;
+        dnsList[requestURL.hostname] = dnsList[requestURL.hostname] || {};
+
+        dns.resolve4(requestURL.hostname, {ttl: true}, (err, dnsRes) => {
             if (!err) {
                 dnsRes.forEach(res => {
-                    if (dnsList.indexOf(res.address) == -1)
-                        dnsList.push(res.address);
+                    if (dnsList[requestURL.hostname].indexOf(res.address) == -1)
+                        dnsList[requestURL.hostname].push(res.address);
                 });
             }
         });
             
-        let requestURL = new URL(req.url.substr('twimg://'.length));
-        let hostname = requestURL.hostname;
 
         if (dnsList.length) {
             let seq = Math.floor((Math.random() * dnsList.length));
-            requestURL.hostname = dnsList[seq];
+            requestURL.hostname = dnsList[requestURL.hostname][seq];
         }
 
         session.defaultSession.cookies.get({url: requestURL.hostname}, (error, cookies) => {
@@ -71,6 +133,7 @@ app.on('ready', () => {
                 let elapsedTime = ((data.length / (new Date() - startTime)) * 1024 / 1000);
                 elapsedTime = (elapsedTime > 1024) ? '[brightRed]' + (elapsedTime / 1000).toFixed(2) + 'mb/s' : elapsedTime.toFixed(2) + 'kb/s';
                 message(`[magenta]twimg[reset] [brightCyan]${elapsedTime}[reset] ${requestURL.hostname} [grey]${res.statusCode}[reset] ${mimeType} [brightWhite]${requestURL.href}[reset]`, 'protocol')
+                
                 callback({
                     mimeType: mimeType || mime.lookup(requestURL.href),
                     data: data
@@ -180,12 +243,24 @@ app.on('ready', () => {
                         if (requestURL.hostname === 'ton.twimg.com')
                             redirectURL = 'sokcuri://' + requestURL.href;
                         else if (requestURL.hostname === 'pbs.twimg.com')
-                            redirectURL = 'twimg://' + requestURL.href;
+                            redirectURL = 'http://127.0.0.1:8080/' + requestURL.href;
                     }    
                 }
 
                 callback({cancel: false, redirectURL: redirectURL})
             });
+
+
+            browserWindow.webContents.session.webRequest.onHeadersReceived(filter, (details, callback) => {
+                 if (details.responseHeaders['content-security-policy']) {
+                     details.responseHeaders['content-security-policy'][0] = 
+                        details.responseHeaders['content-security-policy'][0]
+                        .replace('img-src', 'img-src http://127.0.0.1:*');
+                 }
+
+
+                callback({cancel: false, responseHeaders: details.responseHeaders, statusLine: details.statusLine})
+            })
 
             /* Fix to Electron */
             // electron cannot post redirect request
