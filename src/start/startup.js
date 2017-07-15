@@ -150,6 +150,10 @@ app.on('ready', () => {
                 openPopup(url, target);
             });
 
+            browserWindow.on('close', (event) => {
+                message('Close BrowserWindow', 'main');
+            });
+
             browserWindow.webContents.session.webRequest.onBeforeRequest(filter, (details, callback) => {
                 let requestURL = new URL(details.url);
                 let redirectURL = '';
@@ -166,6 +170,8 @@ app.on('ready', () => {
 
                 callback({cancel: false, redirectURL: redirectURL})
             });
+
+            browserWindow
             
 
             /* Fix to Electron */
@@ -178,7 +184,7 @@ app.on('ready', () => {
                     e.preventDefault();
                 }
             });
-            message('BrowserWindow Monkey-patching completed', 'main');
+            message('Create BrowserWindow', 'main');
 
             return browserWindow;
         }
