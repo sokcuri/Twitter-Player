@@ -1,7 +1,7 @@
 const {ipcRenderer} = require('electron');
 module.exports = {
     message: function(msg, target, level) {
-        ipcRenderer.send('Main.message', msg, target, level);
+        //ipcRenderer.send('Main.message', msg, target, level);
     },
     log: function() {
         arguments = [...arguments, 'log'];
