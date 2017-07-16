@@ -151,7 +151,7 @@ app.on('ready', () => {
 
         const openPopup = (url, target) => {
             let popupWindow;
-            popupWindow = new BrowserWindow({width: 800, height: 800,
+            popupWindow = BrowserWindow.create({width: 800, height: 800,
                 webPreferences: {
                     preload: path.join(__dirname, '..', 'renderer', 'preload.js')
                 }
