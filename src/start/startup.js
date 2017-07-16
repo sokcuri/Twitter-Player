@@ -24,6 +24,8 @@ app.on('ready', () => {
 
     var dnsList = [];
     protocol.registerBufferProtocol('twimg', (req, callback) => {
+        req.url = JSON.parse(Buffer.from(req.url.substr('twimg://'.length), 'base64').toString('utf8'));
+        let requestURL = new URL(req.url);
         dns.resolve4('pbs.twimg.com', {ttl: true}, (err, dnsRes) => {
             if (!err) {
                 dnsRes.forEach(res => {
@@ -33,7 +35,6 @@ app.on('ready', () => {
             }
         });
             
-        let requestURL = new URL(req.url.substr('twimg://'.length));
         let hostname = requestURL.hostname;
 
         if (dnsList.length) {
@@ -85,7 +86,8 @@ app.on('ready', () => {
 
     protocol.registerBufferProtocol('sokcuri', (req, callback) => {
         let startTime = new Date();
-        let requestURL = new URL(req.url.substr('sokcuri://'.length));
+        req.url = JSON.parse(Buffer.from(req.url.substr('sokcuri://'.length), 'base64').toString('utf8'));
+        let requestURL = new URL(req.url);
 
         session.defaultSession.cookies.get({url: requestURL.hostname}, (error, cookies) => {
             const jar = request.jar();
@@ -178,9 +180,9 @@ app.on('ready', () => {
                     if (details.method == 'GET' &&
                         details.uploadData === undefined) {
                         if (requestURL.hostname === 'ton.twimg.com')
-                            redirectURL = 'sokcuri://' + requestURL.href;
+                            redirectURL = 'sokcuri://' + Buffer.from(JSON.stringify(requestURL.href)).toString('base64');
                         else if (requestURL.hostname === 'pbs.twimg.com')
-                            redirectURL = 'twimg://' + requestURL.href;
+                            redirectURL = 'twimg://' + Buffer.from(JSON.stringify(requestURL.href)).toString('base64');
                     }    
                 }
 
