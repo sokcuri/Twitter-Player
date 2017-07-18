@@ -7,6 +7,8 @@ var util = require('util');
 var request = require('request');
 var dns = require('dns');
 var mime = require('mime');
+var Random = require("random-js");
+var random = new Random(Random.engines.browserCrypto);
 
 // overrides application name
 app.setName('TweetDeck Player');
@@ -38,7 +40,7 @@ app.on('ready', () => {
         let hostname = requestURL.hostname;
 
         if (dnsList.length) {
-            let seq = Math.floor((Math.random() * dnsList.length));
+            let seq = random.integer(0, dnsList.length - 1);
             requestURL.hostname = dnsList[seq];
         }
 
