@@ -4,7 +4,9 @@
   "description": "",
   "main": "./src/start/startup.js",
   "scripts": {
-    "start": "electron ./src/start/startup.js"
+    "start": "electron ./src/start/startup.js",
+    "build": "node tool/build.js",
+    "clean": "node tool/clean.js"
   },
   "author": {
     "name": "Sokcuri",
