@@ -150,7 +150,40 @@ app.on('ready', () => {
         mainWindow.setFullScreen(true);
     }
     const app_menu = (require('./app-menu.js'))(mainWindow);
+    if (app.platform === 'darwin')
+    {
+        template.unshift({
+        label: app.getName(),
+        submenu: [
+          {
+            role: 'about',
+          },
+          {
+            type: 'separator',
+          },
+          {
+            type: 'separator',
+          },
+          {
+            role: 'hide',
+          },
+          {
+            role: 'hideothers',
+          },
+          {
+            role: 'unhide',
+          },
+          {
+            type: 'separator',
+          },
+          {
+            role: 'quit',
+          },
+        ],
+      });
+    }
     mainWindow.setMenu(app_menu);
+    Menu.setApplicationMenu(app_menu)
 });
 
 app.on('browser-window-created', function (event, win) {
