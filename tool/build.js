@@ -45,7 +45,6 @@ const postSingleBuild = appPath => {
     fs.copySync(path.join(projectDir, 'LICENSE.md'), path.join(appPath, 'LICENSE.md'));
     fs.copySync(path.join(projectDir, 'README.md'), path.join(appPath, 'README.md'));
     fs.copySync(path.join(projectDir, 'ChangeLog.md'), path.join(appPath, 'ChangeLog.md'));
-    fs.copySync(path.join(projectDir, 'Installation.md'), path.join(appPath, 'Installation.md'));
 };
 
 const build = () => {
