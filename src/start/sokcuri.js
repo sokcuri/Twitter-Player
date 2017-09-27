@@ -1,5 +1,6 @@
 const ccs = require('console-control-strings')
 const path = require('path');
+const {dialog} = require('electron');
 exports.ccolor = function (strings, ...values) {
     // strings: template string
     // arguments+1..: template literal
@@ -112,23 +113,25 @@ exports.pathEnv = {
     // 일반적인 환경 : __dirname/data/
     // MacOS 패키징 : __dirname/<package-name> (ex. /TweetDeckPlayer.app -> /TweetDeckPlayer)
     get userDataPath() {
-        const a = __dirname.substr(0, __dirname.lastIndexOf('/'));
-        const b = __dirname.substr(0, __dirname.lastIndexOf('\\'));
-        const c = __dirname.lastIndexOf('.asar');
-        const d = __dirname.lastIndexOf('.app/Contents/Resources/app');
-        return (d !== -1) ? __dirname.substr(0, d) + '/data/'
-            : (c !== -1) ? (a.length > b.length)
+        const x = __dirname.lastIndexOf('.asar');
+        const y = __dirname.lastIndexOf('.app/Contents/Resources/app');
+        const z = (x != -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
+        const a = z.substr(0, z.lastIndexOf('/'));
+        const b = z.substr(0, z.lastIndexOf('\\'));
+        return (y !== -1) ? __dirname.substr(0, y) + '/data/'
+            : (x !== -1) ? (a.length > b.length)
                 ? a.substr(0, a.lastIndexOf('/')) + '/data/'
                 : b.substr(0, b.lastIndexOf('\\')) + '\\data\\'
                 : path.join(__dirname, '..', '..', 'data');
     },
     get writableRootPath() {
-        const a = __dirname.substr(0, __dirname.lastIndexOf('/'));
-        const b = __dirname.substr(0, __dirname.lastIndexOf('\\'));
-        const c = __dirname.lastIndexOf('.asar');
-        const d = __dirname.lastIndexOf('.app/Contents/Resources/app');
-        return (d !== -1) ? __dirname.substr(0, d) + '/'
-            : (c !== -1) ? (a.length > b.length)
+        const x = __dirname.lastIndexOf('.asar');
+        const y = __dirname.lastIndexOf('.app/Contents/Resources/app');
+        const z = (x != -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
+        const a = z.substr(0, z.lastIndexOf('/'));
+        const b = z.substr(0, z.lastIndexOf('\\'));
+        return (y !== -1) ? __dirname.substr(0, y) + '/data/'
+            : (x !== -1) ? (a.length > b.length)
                 ? a.substr(0, a.lastIndexOf('/'))
                 : b.substr(0, b.lastIndexOf('\\'))
                 : path.join(__dirname, '..', '..');
