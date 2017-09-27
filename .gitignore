@@ -57,6 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# Mac
+.DS_Store
+
 # Data Folder
 data/
 
