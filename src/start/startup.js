@@ -19,6 +19,11 @@ app.setPath('userData', pathEnv.userDataPath);
 // disable disk cache
 app.commandLine.appendSwitch('disable-http-cache', true);
 
+// app exit when window all closed
+app.on('window-all-closed', () => {
+    app.quit();
+});
+
 app.on('ready', () => {
     // Load configures
     config.load();
