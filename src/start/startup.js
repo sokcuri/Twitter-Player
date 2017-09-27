@@ -1,6 +1,6 @@
 const electron = require('electron');
 const {app, BrowserWindow, session, ipcMain, protocol, shell} = electron;
-const {monkeyPatch, ccolor, message} = require('./sokcuri');
+const {monkeyPatch, message, pathEnv} = require('./sokcuri');
 const {URL} = require('url');
 const path = require('path');
 const util = require('util');
@@ -9,18 +9,18 @@ const dns = require('dns');
 const mime = require('mime');
 const Random = require("random-js");
 const random = new Random(Random.engines.browserCrypto);
+const config = require('./config');
 
 // overrides application name
 app.setName('Twitter Player');
+app.setPath('userData', pathEnv.userDataPath);
 
 // disable disk cache
 app.commandLine.appendSwitch('disable-http-cache', true);
 
 app.on('ready', () => {
-    // Custom protocol and intercept request
-    const filter = {
-        urls: ['*']
-    };
+    // Load configures
+    config.load();
 
     require('../protocol/sokcuri');
 
@@ -65,6 +65,11 @@ app.on('ready', () => {
             message('Close BrowserWindow', 'main');
         });
 
+        // Custom protocol and intercept request
+        const filter = {
+            urls: ['*']
+        };
+
         browserWindow.webContents.session.webRequest.onBeforeRequest(filter, (details, callback) => {
             let requestURL = new URL(details.url);
             let redirectURL = '';
@@ -98,12 +103,37 @@ app.on('ready', () => {
     }
 
     let mainWindow;
-    mainWindow = BrowserWindow.create({width: 800, height: 800,
-        webPreferences: {
-            preload: path.join(__dirname, '..', 'renderer', 'preload.js')
+    const preference = (config.data && config.data.bounds) ? config.data.bounds : {};
+    preference.icon = path.join(pathEnv.resPath, 'icon', (process.platform !== 'darwin' ? 'twitter.ico' : 'twitter.icns'));
+    preference.webPreferences = {
+        preload: path.join(__dirname, '..' , 'renderer', 'preload.js')
+    }
+    mainWindow = BrowserWindow.create(preference);
+    mainWindow.on('close', (event) => {
+        config.load();
+        config.data.isMaximized = mainWindow.isMaximized();
+        config.data.isFullScreen = mainWindow.isFullScreen();
+
+        event.sender.hide();
+        if (event.sender.isMaximized()) {
+            event.sender.unmaximize();
         }
+        if (event.sender.isFullScreen()){
+            event.sender.setFullScreen(false);
+        }
+        
+        config.data.bounds = mainWindow.getBounds();
+        config.save();
     });
+
     mainWindow.loadURL('https://twitter.com/');
+    if (config.data.isMaximized) {
+        mainWindow.maximize();
+    }
+
+    if (config.data.isFullScreen) {
+        mainWindow.setFullScreen(true);
+    }
 });
 
 ipcMain.on('Main.message', (evt, msg, target, level) => {
