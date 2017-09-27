@@ -67,7 +67,7 @@ const build = () => {
         out: distDir,
         asar: true,
         overwrite: true,
-        icon: 'src/tweetdeck',
+        icon: 'res/icon/twitter',
         platform: options.platform,
         arch: options.arch,
     };
