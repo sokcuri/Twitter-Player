@@ -1,11 +1,11 @@
-var electron = require('electron');
-var {protocol, session} = electron;
-var request = require('request');
-var {URL} = require('url');
-var {monkeyPatch, message} = require('../start/sokcuri');
-var textEncoding = require('text-encoding');
-var TextDecoder = textEncoding.TextDecoder;
-var TextEncoder = textEncoding.TextEncoder;
+const electron = require('electron');
+const {protocol, session} = electron;
+const request = require('request');
+const {URL} = require('url');
+const {monkeyPatch, message} = require('../start/sokcuri');
+const textEncoding = require('text-encoding');
+const TextDecoder = textEncoding.TextDecoder;
+const TextEncoder = textEncoding.TextEncoder;
 
 protocol.registerBufferProtocol('sokcuri', (req, callback) => {
     let startTime = new Date();

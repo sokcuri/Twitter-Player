@@ -1,4 +1,4 @@
-var ccs = require('console-control-strings')
+const ccs = require('console-control-strings')
 exports.ccolor = function (strings, ...values) {
     // strings: template string
     // arguments+1..: template literal

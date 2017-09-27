@@ -1,14 +1,14 @@
-var electron = require('electron');
-var {app, BrowserWindow, session, ipcMain, protocol} = electron;
-var {monkeyPatch, ccolor, message} = require('./sokcuri');
-var {URL} = require('url');
-var path = require('path');
-var util = require('util');
-var request = require('request');
-var dns = require('dns');
-var mime = require('mime');
-var Random = require("random-js");
-var random = new Random(Random.engines.browserCrypto);
+const electron = require('electron');
+const {app, BrowserWindow, session, ipcMain, protocol, shell} = electron;
+const {monkeyPatch, ccolor, message} = require('./sokcuri');
+const {URL} = require('url');
+const path = require('path');
+const util = require('util');
+const request = require('request');
+const dns = require('dns');
+const mime = require('mime');
+const Random = require("random-js");
+const random = new Random(Random.engines.browserCrypto);
 
 // overrides application name
 app.setName('Twitter Player');
