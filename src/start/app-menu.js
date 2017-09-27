@@ -53,6 +53,23 @@ module.exports = function(mainWindow) {
             type: 'separator',
             },
             {
+                label: 'Back',
+                accelerator: (app.platform === 'darwin' ? 'Command+Left' : 'Alt+Left'),
+                click (item, focusedWindow) {
+                    if (focusedWindow) focusedWindow.webContents.goBack()
+                }
+            },
+            {
+                label: 'Forward',
+                accelerator: (app.platform === 'darwin' ? 'Command+Right' : 'Alt+Right'),
+                click (item, focusedWindow) {
+                    if (focusedWindow) focusedWindow.webContents.goRight()
+                }
+            },
+            {
+            type: 'separator',
+            },
+            {
             label: 'Reload',
             accelerator: 'CmdOrCtrl+R',
             click (item, focusedWindow) {
