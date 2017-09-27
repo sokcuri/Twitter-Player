@@ -52,3 +52,33 @@ exports.monkeyPatch = function (original, patches) {
 
     return newRef;
 }
+
+exports.message = function (msg, target, level) {
+    target = (function (s) {
+        switch (s) {
+            case 'main':
+                return `[grey][[brightBlue]Main[grey]][reset]\x20`;
+            case 'renderer':
+                return `[grey][[brightRed]Renderer[grey]][reset]\x20`;
+            case 'protocol':
+                return `[grey][[brightGreen]Protocol[grey]][reset]\x20`;
+            default:
+                return '';
+        }
+    })(target);
+    level = (function (l) {
+        switch (l) {
+            case 'log':
+                return '';
+            case 'info':
+                return `[bgBlue][brightWhite]INFO[reset]\x20`;
+            case 'warn':
+                return `[bgYellow][brightWhite]WARN[reset]\x20`;
+            case 'error':
+                return `[bgRed][brightWhite]ERR[reset]\x20`;
+            default:
+                return '';
+        }
+    })(level);
+    console.log(exports.ccolor`${target}${level}${msg}`);
+}

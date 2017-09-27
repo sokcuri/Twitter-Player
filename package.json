@@ -1,18 +1,30 @@
 {
-  "name": "tweetdeckplayer",
-  "version": "3.0.0",
+  "name": "twitter-player",
+  "version": "1.0.0",
   "description": "",
   "main": "./src/start/startup.js",
   "scripts": {
     "start": "electron ./src/start/startup.js"
   },
-  "author": "",
-  "license": "",
+  "author": {
+    "name": "Sokcuri",
+    "email": "sokcuri@gmail.com",
+    "url": "https://github.com/sokcuri"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sokcuri/TwitterPlayer"
+  },
+  "bugs": {
+    "url": "https://github.com/sokcuri/TwitterPlayer/issues"
+  },
+  "license": "MIT",
   "dependencies": {
     "console-control-strings": "^1.1.0",
     "electron": "^1.6.11",
     "mime": "^1.3.6",
     "random-js": "^1.0.8",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "text-encoding": "^0.6.4"
   }
 }
