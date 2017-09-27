@@ -244,9 +244,6 @@ app.on('browser-window-created', function (event, win) {
             menu.append(new MenuItem(menuCommand.delete));
             menu.append(new MenuItem(menuCommand.separator));
             menu.append(new MenuItem(menuCommand.select_all));
-        }
-        else if (params.selectionText) {
-            menu.append(new MenuItem(menuCommand.copy));
         } else {
             if (params.linkURL) {
                 menu.append(new MenuItem(menuCommand.open_link));
@@ -258,6 +255,10 @@ app.on('browser-window-created', function (event, win) {
                 menu.append(new MenuItem(menuCommand.save_image));
                 menu.append(new MenuItem(menuCommand.copy_image_url));
                 menu.append(new MenuItem(menuCommand.search_google_img));
+                menu.append(new MenuItem(menuCommand.separator));
+            }
+            if (params.selectionText) {
+                menu.append(new MenuItem(menuCommand.copy));
                 menu.append(new MenuItem(menuCommand.separator));
             }
             if (!params.linkURL && !params.srcURL) {
