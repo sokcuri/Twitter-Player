@@ -115,26 +115,16 @@ exports.pathEnv = {
     get userDataPath() {
         const x = __dirname.lastIndexOf('.asar');
         const y = __dirname.lastIndexOf('.app/Contents/Resources/app');
-        const z = (x != -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
-        const a = z.substr(0, z.lastIndexOf('/'));
-        const b = z.substr(0, z.lastIndexOf('\\'));
+        const z = (x === -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
         return (y !== -1) ? __dirname.substr(0, y) + '/data/'
-            : (x !== -1) ? (a.length > b.length)
-                ? a.substr(0, a.lastIndexOf('/')) + '/data/'
-                : b.substr(0, b.lastIndexOf('\\')) + '\\data\\'
-                : path.join(__dirname, '..', '..', 'data');
+            : path.join(z, '..', '..', 'data');
     },
     get writableRootPath() {
         const x = __dirname.lastIndexOf('.asar');
         const y = __dirname.lastIndexOf('.app/Contents/Resources/app');
-        const z = (x != -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
-        const a = z.substr(0, z.lastIndexOf('/'));
-        const b = z.substr(0, z.lastIndexOf('\\'));
-        return (y !== -1) ? __dirname.substr(0, y) + '/data/'
-            : (x !== -1) ? (a.length > b.length)
-                ? a.substr(0, a.lastIndexOf('/'))
-                : b.substr(0, b.lastIndexOf('\\'))
-                : path.join(__dirname, '..', '..');
+        const z = (x === -1 ? __dirname : __dirname.substring(0, __dirname.lastIndexOf('.asar')));
+        return (y !== -1) ? __dirname.substr(0, y) + '/'
+            : path.join(z, '..', '..');
     },
     get mainPath() {
         return path.join(__dirname, '..');
