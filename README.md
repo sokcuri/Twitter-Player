@@ -21,4 +21,4 @@ http://github.com/sokcuri/Twitter-Player
   - 이미지를 원본 사이즈로 다운받기
 
 * 기타 편의기능
-  - 웬 브라우저와 독립된 세션 제공
+  - 웹 브라우저와 독립된 세션 제공
