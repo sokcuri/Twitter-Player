@@ -105,6 +105,7 @@ app.on('ready', () => {
     let mainWindow;
     const preference = (config.data && config.data.bounds) ? config.data.bounds : {};
     preference.icon = path.join(pathEnv.resPath, 'icon', (process.platform !== 'darwin' ? 'twitter.ico' : 'twitter.icns'));
+    preference.autoHideMenuBar = true;
     preference.webPreferences = {
         preload: path.join(__dirname, '..' , 'renderer', 'preload.js')
     }
