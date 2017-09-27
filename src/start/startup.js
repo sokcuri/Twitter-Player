@@ -90,6 +90,10 @@ app.on('ready', () => {
         /* Fix to Electron */
         // electron cannot post redirect request
         browserWindow.webContents.on('did-get-redirect-request', (e, oldURL, newURL, isMainFrame) => {
+            if (newURL.match(/(https?:\/\/([a-z0-9]+[.])*twitter.com|sokcuri:\/\/|twimg:\/\/)/) === null) {
+                shell.openExternal(newURL);
+                e.preventDefault();
+            }
             if (isMainFrame) {
                 setTimeout(function() {
                     browserWindow.send('Renderer.redirect-url', newURL)
@@ -125,6 +129,14 @@ app.on('ready', () => {
         
         config.data.bounds = mainWindow.getBounds();
         config.save();
+    });
+    mainWindow.on('page-title-updated', (event, title) => {
+        const twpl_signature = ' - Twitter Player';
+        if (title.lastIndexOf(twpl_signature) == -1) {
+            const changedTitle = title + twpl_signature;
+            mainWindow.setTitle(changedTitle);
+            event.preventDefault();
+        }
     });
 
     mainWindow.loadURL('https://twitter.com/');
