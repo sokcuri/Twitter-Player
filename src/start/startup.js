@@ -135,6 +135,8 @@ app.on('ready', () => {
     if (config.data.isFullScreen) {
         mainWindow.setFullScreen(true);
     }
+    const app_menu = (require('./app-menu.js'))(mainWindow);
+    mainWindow.setMenu(app_menu);
 });
 
 ipcMain.on('Main.message', (evt, msg, target, level) => {
