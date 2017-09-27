@@ -57,7 +57,8 @@ app.on('ready', () => {
 
         browserWindow.webContents.on('new-window', (e, url, target) => {
             e.preventDefault();
-            openPopup(url, target);
+            shell.openExternal(url);
+            //openPopup(url, target);
         });
 
         browserWindow.on('close', (event) => {
