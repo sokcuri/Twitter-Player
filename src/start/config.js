@@ -1,11 +1,11 @@
 const electron = require('electron');
-const {app} = electron;
-const {pathEnv} = require('./sokcuri');
+const { app } = electron;
+const { pathEnv } = require('./sokcuri');
 const fs = require('fs');
 const path = require('path');
 
 module.exports = {
-    
+
     // 설정파일 로드
     _filePath: pathEnv.userDataPath + '/config.json',
     _defaultConfig: {
@@ -30,6 +30,17 @@ module.exports = {
     },
     // 설정파일 저장
     save() {
+        // 폴더가 삭제되거나 없으면 만들어줌
+        function ensureDirectoryExistence(filePath) {
+            var dirname = path.dirname(filePath);
+            if (fs.existsSync(dirname)) {
+                return true;
+            }
+            ensureDirectoryExistence(dirname);
+            fs.mkdirSync(dirname);
+        }
+        ensureDirectoryExistence(pathEnv.userDataPath);
+
         const jsonStr = JSON.stringify(this.data, null, 2);
         fs.writeFileSync(this._filePath, jsonStr, 'utf8');
     },
