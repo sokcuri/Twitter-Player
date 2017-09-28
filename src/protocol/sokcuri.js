@@ -6,6 +6,7 @@ const {monkeyPatch, message} = require('../start/sokcuri');
 const textEncoding = require('text-encoding');
 const TextDecoder = textEncoding.TextDecoder;
 const TextEncoder = textEncoding.TextEncoder;
+const twttr = require('twitter-text');
 
 let pattern_data = [];
 request({
