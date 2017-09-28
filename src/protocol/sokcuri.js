@@ -64,6 +64,8 @@ protocol.registerBufferProtocol('sokcuri', (req, callback) => {
             for (let d of pattern_data) {
                 string_data = string_data.replace(d[0], d[1]);
             }
+            // remove sourcemap
+            string_data = string_data.replace(/\/\/#.*sourceMappingURL.+/, '');
             data = new TextEncoder("utf-8").encode(string_data);
 
             let mimeType = res.headers['content-type'] || '';
