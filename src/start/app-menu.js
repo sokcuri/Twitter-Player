@@ -196,7 +196,7 @@ module.exports = function (mainWindow) {
             submenu: [
                 {
                     label: 'Back',
-                    accelerator: (os.platform() === 'darwin' ? 'Command+Right' : 'Alt+Right'),
+                    accelerator: (os.platform() === 'darwin' ? 'Command+Left' : 'Alt+Left'),
                     click(item, focusedWindow) {
                         if (focusedWindow) focusedWindow.webContents.goBack()
                     }
