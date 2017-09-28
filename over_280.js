@@ -1,4 +1,4 @@
-let pattern_data = [
+[
     ['version:"cramming",max_tweet_length:280,default_weight:200,ranges:[{start:0,end:4351,weight:100},{start:4352,end:65535,weight:200}]})',
      'version:"default",max_tweet_length:280,default_weight:100,ranges:[{start:0,end:4351,weight:100},{start:4352,end:65535,weight:100}]})'],
     ['version:"default",max_tweet_length:140,scale:100,default_weight:100,short_url_length:23,short_url_length_https:23}',
