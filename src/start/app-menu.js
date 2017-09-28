@@ -125,6 +125,9 @@ module.exports = function(mainWindow) {
             click () {
                 var flag = !mainWindow.isAlwaysOnTop();
                 mainWindow.setAlwaysOnTop(flag);
+                config.load();
+                config.data.alwaysOnTop = flag;
+                config.save();
             },
             },
             {
