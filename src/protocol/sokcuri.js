@@ -60,7 +60,7 @@ protocol.registerBufferProtocol('sokcuri', (req, callback) => {
             
 
             let string_data = new TextDecoder("utf-8").decode(data);
-            
+
             for (let d of pattern_data) {
                 string_data = string_data.replace(d[0], d[1]);
             }
