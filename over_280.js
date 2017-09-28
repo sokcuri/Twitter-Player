@@ -12,5 +12,5 @@
      //['url:"/i/tweet/create",',
     // 'url:"https:\/\/api.twitter.com/1.1/statuses/update.json",useOAuthSessionAuth:true,'],
     ['this.JSONRequest=function(i,n){',
-     'this.JSONRequest=function(i,n){if (i.url === "/i/tweet/create") { let weight=0; renderer.logEx(i.data); for (let c of i.data.status) { if (c.charCodeAt() <= 4351){ weight += 1; } else if (c.charCodeAt() <= 65535) { weight += 2; }  }; if (weight > 140) { i.url = "https:\/\/api.twitter.com/1.1/statuses/update.json"; i.useOAuthSessionAuth = true; }};renderer.logEx(i);']
+     'this.JSONRequest=function(i,n){if (i.url === "/i/tweet/create") { let weight=0; for (let c of i.data.status) { if (c.charCodeAt() <= 4351){ weight += 1; } else if (c.charCodeAt() <= 65535) { weight += 2; }  }; if (weight > 140) { i.url = "https:\/\/api.twitter.com/1.1/statuses/update.json"; i.useOAuthSessionAuth = true; }};']
 ]
