@@ -7,4 +7,6 @@ ipcRenderer.on('uiShowMessage', (e, obj) => {
     $(document).trigger('uiShowMessage', {message: obj.message});
 });
 
+window.twttr = require('twitter-text');
+
 main.message('preload.js loaded', 'renderer');
