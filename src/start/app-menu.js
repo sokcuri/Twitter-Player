@@ -1,4 +1,5 @@
 const electron = require('electron');
+const config = require('./config');
 const {app, shell, Menu, MenuItem} = require('electron');
 module.exports = function(mainWindow) {
     const template = [
@@ -43,10 +44,21 @@ module.exports = function(mainWindow) {
         label: 'View',
         submenu: [
             {
-                label: 'Twitter Main',
-                accelerator: 'CmdOrCtrl+H',
+                label: 'Web Twitter Page',
                 click (item, focusedWindow) {
                     if (focusedWindow) focusedWindow.loadURL('https://twitter.com/');
+                    config.load();
+                    config.data.viewPageType = 'web';
+                    config.save();
+                },
+            },
+            {
+                label: 'Mobile Twitter Page',
+                click (item, focusedWindow) {
+                    if (focusedWindow) focusedWindow.loadURL('https://mobile.twitter.com/');
+                    config.load();
+                    config.data.viewPageType = 'mobile';
+                    config.save();
                 },
             },
             {

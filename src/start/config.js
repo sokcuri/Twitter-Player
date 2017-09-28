@@ -5,9 +5,11 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = {
+    
     // 설정파일 로드
     _filePath: pathEnv.userDataPath + '/config.json',
     _defaultConfig: {
+        viewPageType: 'web'
     },
     data: {},
     load() {

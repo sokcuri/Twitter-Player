@@ -146,7 +146,7 @@ app.on('ready', () => {
             event.preventDefault();
         }
     });
-    mainWindow.loadURL('https://twitter.com/');
+    mainWindow.loadURL((config.data.viewPageType === 'mobile' ? 'https://mobile.twitter.com/' : 'https://twitter.com'));
     if (config.data.isMaximized) {
         mainWindow.maximize();
     }
@@ -200,7 +200,14 @@ app.on('browser-window-created', function (event, win) {
             separator: { type: 'separator' },
             copy_page_url: { label: 'Copy Page URL', click: () => clipboard.writeText(params.pageURL) },
             open_page_browser: { label: 'Open Page in Browser', click: () => shell.openExternal(params.pageURL) },
-            homepage: { label: 'Go to Main Page', click: () => win.loadURL('https://twitter.com/'), accelerator: 'CmdOrCtrl+H' },
+            homepage: { label: 'Go to Main Page', click: () => {
+                let url = new URL(params.pageURL);
+                if (url.host === 'mobile.twitter.com') {
+                    win.loadURL(url.origin);
+                } else {
+                    win.loadURL('https://twitter.com/')
+                }
+            }, accelerator: 'CmdOrCtrl+H' },
             cut: { role: 'cut', accelerator: 'CmdOrCtrl+X', enabled: params.editFlags.canCut },
             copy: { role: 'copy', accelerator: 'CmdOrCtrl+C', enabled: params.editFlags.canCopy },
             paste: { role: 'paste', accelerator: 'CmdOrCtrl+V', enabled: params.editFlags.canPaste },
