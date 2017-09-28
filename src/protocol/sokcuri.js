@@ -57,8 +57,6 @@ protocol.registerBufferProtocol('sokcuri', (req, callback) => {
             res.statusCode = res.statusCode || 'N/A';
             data = data || Buffer.from('')
 
-            
-
             let string_data = new TextDecoder("utf-8").decode(data);
 
             for (let d of pattern_data) {
