@@ -84,8 +84,8 @@ app.on('ready', () => {
             if (requestURL.protocol === 'https:') {
                 if (details.method == 'GET' &&
                     details.uploadData === undefined) {
-                    if (requestURL.hostname === 'abs.twimg.com' && requestURL.href.lastIndexOf('.js') === requestURL.href.length - 3)
-                        redirectURL = 'sokcuri://' + Buffer.from(JSON.stringify(requestURL.href)).toString('base64');
+                    if (requestURL.hostname.match(/([a-z0-9\-]+[.])*twimg.com/) && requestURL.href.lastIndexOf('.js') === requestURL.href.length - 3)
+                        redirectURL = 'sokcuri://' + requestURL.host + requestURL.pathname + '/' + Buffer.from(JSON.stringify(requestURL.href)).toString('base64');
                     //else if (requestURL.hostname === 'pbs.twimg.com')
                     //    redirectURL = 'twimg://' + Buffer.from(JSON.stringify(requestURL.href)).toString('base64');
                 }

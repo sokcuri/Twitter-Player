@@ -29,11 +29,9 @@ protocol.registerBufferProtocol('sokcuri', (req, callback) => {
     let startTime = new Date();
     try
     {
-    req.url = JSON.parse(Buffer.from(req.url.substr('sokcuri://'.length), 'base64').toString('utf8'));
+    req.url = JSON.parse(Buffer.from(req.url.substr(req.url.lastIndexOf('/') + 1), 'base64').toString('utf8'));
     } catch (e)
     {
-        req.url = '';
-        console.info("Req.url error", req.url);
         return;
     }
     let requestURL = new URL(req.url);
