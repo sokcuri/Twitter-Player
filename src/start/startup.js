@@ -3,6 +3,7 @@ const {app, BrowserWindow, session, ipcMain, protocol, shell, Menu, MenuItem, cl
 const {monkeyPatch, message, pathEnv, orig } = require('./sokcuri');
 const {URL} = require('url');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const util = require('util');
 const request = require('request');
@@ -157,38 +158,6 @@ app.on('ready', () => {
         mainWindow.setAlwaysOnTop(true);
     }
     const app_menu = (require('./app-menu.js'))(mainWindow);
-    if (app.platform === 'darwin')
-    {
-        template.unshift({
-        label: app.getName(),
-        submenu: [
-          {
-            role: 'about',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'hide',
-          },
-          {
-            role: 'hideothers',
-          },
-          {
-            role: 'unhide',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'quit',
-          },
-        ],
-      });
-    }
     mainWindow.setMenu(app_menu);
     Menu.setApplicationMenu(app_menu)
 });

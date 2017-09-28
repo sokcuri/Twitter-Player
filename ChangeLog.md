@@ -1,6 +1,12 @@
 # Twitter Player ChangeLog
 http://github.com/sokcuri/Twitter-Player/releases
 
+트위터 플레이어 v1.03
+-----------------------------
+* 버그 수정
+  - 앞으로 가기 기능이 작동하지 않던 문제 수정
+  
+
 트위터 플레이어 v1.02
 -----------------------------
 * 모바일 페이지 추가

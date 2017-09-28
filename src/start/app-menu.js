@@ -2,6 +2,8 @@ const electron = require('electron');
 const config = require('./config');
 const { URL } = require('url');
 const { app, shell, Menu, MenuItem } = require('electron');
+const os = require('os');
+let timer = {};
 module.exports = function (mainWindow) {
     const template = [
         {
@@ -69,6 +71,12 @@ module.exports = function (mainWindow) {
                     label: 'Go to Top of page',
                     accelerator: 'CmdOrCtrl+T',
                     click(item, focusedWindow) {
+                        if (timer[0] === undefined || timer[0] < new Date().getTime()) {
+                            timer[0] = new Date().getTime() + 300;
+                        } else {
+                            timer[0] = new Date().getTime() + 300;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('.nav > li.active > a').click()`, true);
@@ -86,6 +94,12 @@ module.exports = function (mainWindow) {
                     label: 'Home',
                     accelerator: 'CmdOrCtrl+1',
                     click(item, focusedWindow) {
+                        if (timer[1] === undefined || timer[1] < new Date().getTime()) {
+                            timer[1] = new Date().getTime() + 200;
+                        } else {
+                            timer[1] = new Date().getTime() + 200;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('#search-query').blur()`, true);
@@ -100,6 +114,12 @@ module.exports = function (mainWindow) {
                     label: 'Search',
                     accelerator: 'CmdOrCtrl+2',
                     click(item, focusedWindow) {
+                        if (timer[2] === undefined || timer[2] < new Date().getTime()) {
+                            timer[2] = new Date().getTime() + 200;
+                        } else {
+                            timer[2] = new Date().getTime() + 200;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('#search-query').focus()`, true);
@@ -113,6 +133,12 @@ module.exports = function (mainWindow) {
                     label: 'Notification',
                     accelerator: 'CmdOrCtrl+3',
                     click(item, focusedWindow) {
+                        if (timer[3] === undefined || timer[3] < new Date().getTime()) {
+                            timer[3] = new Date().getTime() + 200;
+                        } else {
+                            timer[3] = new Date().getTime() + 200;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('#search-query').blur()`, true);
@@ -127,6 +153,12 @@ module.exports = function (mainWindow) {
                     label: 'Direct Message',
                     accelerator: 'CmdOrCtrl+4',
                     click(item, focusedWindow) {
+                        if (timer[4] === undefined || timer[4] < new Date().getTime()) {
+                            timer[4] = new Date().getTime() + 200;
+                        } else {
+                            timer[4] = new Date().getTime() + 200;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('#search-query').blur()`, true);
@@ -143,6 +175,12 @@ module.exports = function (mainWindow) {
                     label: 'New Tweet',
                     accelerator: 'CmdOrCtrl+N',
                     click(item, focusedWindow) {
+                        if (timer[5] === undefined || timer[5] < new Date().getTime()) {
+                            timer[5] = new Date().getTime() + 200;
+                        } else {
+                            timer[5] = new Date().getTime() + 200;
+                            return;
+                        }
                         const url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'twitter.com') {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('[data-component-context="new_tweet_button"]').click()`, true);
@@ -158,16 +196,16 @@ module.exports = function (mainWindow) {
             submenu: [
                 {
                     label: 'Back',
-                    accelerator: (app.platform === 'darwin' ? 'Command+Left' : 'Alt+Left'),
+                    accelerator: (os.platform() === 'darwin' ? 'Command+Right' : 'Alt+Right'),
                     click(item, focusedWindow) {
                         if (focusedWindow) focusedWindow.webContents.goBack()
                     }
                 },
                 {
                     label: 'Forward',
-                    accelerator: (app.platform === 'darwin' ? 'Command+Right' : 'Alt+Right'),
+                    accelerator: (os.platform() === 'darwin' ? 'Command+Right' : 'Alt+Right'),
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.webContents.goRight()
+                        if (focusedWindow) focusedWindow.webContents.goForward()
                     }
                 },
                 {
@@ -239,7 +277,28 @@ module.exports = function (mainWindow) {
             ],
         },
     ];
-
+    if (os.platform() === 'darwin') {
+        template[0] = {
+            label: 'Twitter Player',
+            submenu: [
+                {
+                    role: 'hide',
+                },
+                {
+                    role: 'hideothers',
+                },
+                {
+                    role: 'unhide',
+                },
+                {
+                    type: 'separator',
+                },
+                {
+                    role: 'quit',
+                },
+            ],
+        };
+    }
     const menu = Menu.buildFromTemplate(template);
     return menu;
 }
