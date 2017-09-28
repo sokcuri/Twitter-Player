@@ -150,9 +150,11 @@ app.on('ready', () => {
     if (config.data.isMaximized) {
         mainWindow.maximize();
     }
-
     if (config.data.isFullScreen) {
         mainWindow.setFullScreen(true);
+    }
+    if (config.data.alwaysOnTop) {
+        mainWindow.setAlwaysOnTop(true);
     }
     const app_menu = (require('./app-menu.js'))(mainWindow);
     if (app.platform === 'darwin')
