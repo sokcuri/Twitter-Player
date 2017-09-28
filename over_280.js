@@ -12,5 +12,11 @@
      //['url:"/i/tweet/create",',
     // 'url:"https:\/\/api.twitter.com/1.1/statuses/update.json",useOAuthSessionAuth:true,'],
     ['this.JSONRequest=function(i,n){',
-     'this.JSONRequest=function(i,n){if (i.url === "/i/tweet/create") { let weight=0; for (let c of i.data.status) { if (c.charCodeAt() <= 4351){ weight += 1; } else if (c.charCodeAt() <= 65535) { weight += 2; }  }; if (weight > 140) { i.url = "https:\/\/api.twitter.com/1.1/statuses/update.json"; i.useOAuthSessionAuth = true; }};']
+     'this.JSONRequest=function(i,n){if (i.url === "/i/tweet/create") { let weight=0; if (typeof twttr !== "undefined") { weight = twttr.getTweetLength(i.data.status); } else { for (let c of i.data.status) { if (c.charCodeAt() <= 4351){ weight += 1; } else if (c.charCodeAt() <= 65535) { weight += 2; }  }; if (weight > 140) { i.url = "https:\/\/api.twitter.com/1.1/statuses/update.json"; i.useOAuthSessionAuth = true; }}};'],
+    ['var p={status:t,media_ids:f.join(",")};',
+     'var p={status:t,media_ids:f.join(","),weighted_character_count:true};'],
+    ['_=t.MAX_TWEET_LENGTH=140',
+     '_=t.MAX_TWEET_LENGTH=280'],
+    ['d.txt.getTweetLength(e)>140?"too_long"',
+     'd.txt.getTweetLength(e)>280?"too_long"']
 ]
