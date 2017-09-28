@@ -5,7 +5,7 @@ http://github.com/sokcuri/Twitter-Player
 > 최신 릴리즈는 [트위터 플레이어 릴리즈 페이지](https://github.com/sokcuri/Twitter-Player/releases)에서 다운로드할 수 있습니다.  
 > 버전 확인 및 업데이트 이력은 [ChangeLog.md](ChangeLog.md) 파일을 확인하거나 릴리즈 페이지를 참고하세요.
 
-> 사용 중 문의사항 또는 이슈가 있다면 [트윗덱 플레이어 이슈 페이지](https://github.com/sokcuri/Twitter-Player/issues)를 방문하세요.
+> 사용 중 문의사항 또는 이슈가 있다면 [트위터 플레이어 이슈 페이지](https://github.com/sokcuri/Twitter-Player/issues)를 방문하세요.
 
 ---
 
