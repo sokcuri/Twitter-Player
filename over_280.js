@@ -8,9 +8,9 @@
     ['r=c.a.getDeciderValue("cramming_ui_enabled")?{weighted_character_count:!0}',
      'r=true?{weighted_character_count:!0}'],
     ['url:"/i/tweet/create",isMutation:!1,data:h,success:s.bind(this),error:o.bind(this),',
-     'url:"https:\/\/api.twitter.com/1.1/statuses/update.json",useOAuthSessionAuth:true,isMutation:!1,data:h,success:(function(a){s.bind(this)(a);}).bind(this),error:(function(a){a.message = a.errors.message;o.bind(this)(a);}).bind(this),'],
+     'url:"/i/tweet/create",isMutation:!1,data:h,success:(function(a){s.bind(this)(a);}).bind(this),error:(function(a){a.message = a.errors.message;o.bind(this)(a);}).bind(this),'],
      //['url:"/i/tweet/create",',
     // 'url:"https:\/\/api.twitter.com/1.1/statuses/update.json",useOAuthSessionAuth:true,'],
     ['this.JSONRequest=function(i,n){',
-     'this.JSONRequest=function(i,n){renderer.logEx(i);']
+     'this.JSONRequest=function(i,n){if (i.url === "/i/tweet/create") { let weight=0; renderer.logEx(i.data); for (let c of i.data.status) { if (c.charCodeAt() <= 4351){ weight += 1; } else if (c.charCodeAt() <= 65535) { weight += 2; }  }; if (weight > 140) { i.url = "https:\/\/api.twitter.com/1.1/statuses/update.json"; i.useOAuthSessionAuth = true; }};renderer.logEx(i);']
 ]
