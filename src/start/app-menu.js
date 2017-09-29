@@ -80,9 +80,6 @@ module.exports = function (mainWindow) {
                     }
                 },
                 {
-                    type: 'separator',
-                },
-                {
                     label: 'Go to Top of page',
                     accelerator: 'CmdOrCtrl+T',
                     click(item, focusedWindow) {
