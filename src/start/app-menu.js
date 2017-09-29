@@ -68,6 +68,21 @@ module.exports = function (mainWindow) {
                     type: 'separator',
                 },
                 {
+                    label: 'Go to Main Page',
+                    accelerator: 'CmdOrCtrl+H',
+                    click(item, focusedWindow) {
+                        let url = new URL(focusedWindow.webContents.getURL());
+                        if (url.host === 'mobile.twitter.com') {
+                            win.loadURL(url.origin);
+                        } else {
+                            win.loadURL('https://twitter.com/')
+                        }
+                    }
+                },
+                {
+                    type: 'separator',
+                },
+                {
                     label: 'Go to Top of page',
                     accelerator: 'CmdOrCtrl+T',
                     click(item, focusedWindow) {
