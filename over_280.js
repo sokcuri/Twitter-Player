@@ -19,6 +19,6 @@
      '_=t.MAX_TWEET_LENGTH=280'],
     ['d.txt.getTweetLength(e)>140?"too_long"',
      'd.txt.getTweetLength(e)>280?"too_long"'],
-    ['this.on(document,"uiShowMessage",this.showTemporaryMessage),',
-     'this.on(document,"uiShowMessage",this.showStickyMessage),']
+    ['this.showTemporaryMessage=function(s,e){this.showMessage(e.message,!1,e.timeout)};',
+     'this.showTemporaryMessage=function(s,e){this.showMessage(e.message,!0,e.timeout)};']
 ]
