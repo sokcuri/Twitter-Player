@@ -178,7 +178,7 @@ app.on('browser-window-created', function (event, win) {
                 } else {
                     win.loadURL('https://twitter.com/')
                 }
-            }, accelerator: 'CmdOrCtrl+P' },
+            }, accelerator: 'CmdOrCtrl+G' },
             cut: { role: 'cut', accelerator: 'CmdOrCtrl+X', enabled: params.editFlags.canCut },
             copy: { role: 'copy', accelerator: 'CmdOrCtrl+C', enabled: params.editFlags.canCopy },
             paste: { role: 'paste', accelerator: 'CmdOrCtrl+V', enabled: params.editFlags.canPaste },

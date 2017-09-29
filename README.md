@@ -25,7 +25,7 @@ http://github.com/sokcuri/Twitter-Player
 
 * 부가 단축키
   - 새로고침 (Command or Ctrl + R)
-  - 홈페이지로 가기 (Command or Ctrl + P)
+  - 홈페이지로 가기 (Command or Ctrl + G)
   - 페이지 탑으로 가기 (Command or Ctrl + T)
   - 홈 타임라인 (Command or Ctrl + 1)
   - 검색 (Command or Ctrl + 2)

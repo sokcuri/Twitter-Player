@@ -69,7 +69,7 @@ module.exports = function (mainWindow) {
                 },
                 {
                     label: 'Go to Main Page',
-                    accelerator: 'CmdOrCtrl+P',
+                    accelerator: 'CmdOrCtrl+G',
                     click(item, focusedWindow) {
                         let url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'mobile.twitter.com') {
