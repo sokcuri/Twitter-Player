@@ -24,6 +24,8 @@ http://github.com/sokcuri/Twitter-Player
   - 이미지를 원본 사이즈로 다운받기
 
 * 부가 단축키
+  - 새로고침 (Command or Ctrl + R)
+  - 홈페이지로 가기 (Command or Ctrl + P)
   - 페이지 탑으로 가기 (Command or Ctrl + T)
   - 홈 타임라인 (Command or Ctrl + 1)
   - 검색 (Command or Ctrl + 2)
