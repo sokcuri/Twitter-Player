@@ -20,5 +20,9 @@
     ['d.txt.getTweetLength(e)>140?"too_long"',
      'd.txt.getTweetLength(e)>280?"too_long"'],
     ['{this.showMessage(e.message,!1,e.timeout)}',
-     '{this.showMessage(e.message,!1,e.timeout)}']
+     '{this.showMessage(e.message,!1,e.timeout,!0)}'],
+    ['this.showMessage=function(e,i,n){',
+     'this.showMessage=function(e,i,n,x){'],
+    ['this.select("closeSelector").toggle(!!i)',
+     'this.select("closeSelector").toggle(!!i||!!x)']
 ]
