@@ -4,7 +4,7 @@ http://github.com/sokcuri/Twitter-Player/releases
 트위터 플레이어 v1.04
 -----------------------------
 * 버그 수정
-  - 메인 페이지로 가기 (Command or Ctrl + H) 단축키가 작동하지 않던 문제를 수정했습니다.
+  - 메인 페이지로 가기 단축키가 작동하지 않던 문제를 수정했습니다.
 
 * 기능 개선
   - 트위터 공웹 알림창에 알림을 바로 닫을 수 있는 닫기 버튼이 추가됩니다.
@@ -29,15 +29,8 @@ http://github.com/sokcuri/Twitter-Player/releases
   - 정확히 140자 이후에만 우회 루트로 작성될 수 있도록 변경하였습니다.
   - 앱을 재실행할때도 항상 위 여부가 기억되도록 개선되었습니다.
 
-* 단축키가 추가되었습니다
-  - 페이지 탑으로 가기 (Command or Ctrl + T)
-  - 홈 타임라인 (Command or Ctrl + 1)
-  - 검색 (Command or Ctrl + 2)
-  - 알림 (Command or Ctrl + 3)
-  - DM (Command or Ctrl + 4)
-  - 새 트윗 작성 (Command or Ctrl + N)
-
-* 내부 개선
+* 기능 개선
+  - 단축키가 추가되었습니다
   - BufferProtocol URL Scheme 개선
 
 
