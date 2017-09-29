@@ -20,5 +20,5 @@
     ['d.txt.getTweetLength(e)>140?"too_long"',
      'd.txt.getTweetLength(e)>280?"too_long"'],
     ['{this.showMessage(e.message,!1,e.timeout)}',
-     '{this.showMessage(e.message,!0,e.timeout)}']
+     '{this.showMessage(e.message,!1,e.timeout)}']
 ]
