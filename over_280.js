@@ -18,5 +18,7 @@
     ['_=t.MAX_TWEET_LENGTH=140',
      '_=t.MAX_TWEET_LENGTH=280'],
     ['d.txt.getTweetLength(e)>140?"too_long"',
-     'd.txt.getTweetLength(e)>280?"too_long"']
+     'd.txt.getTweetLength(e)>280?"too_long"'],
+    ['this.on(document,"uiShowMessage",this.showTemporaryMessage),',
+     'this.on(document,"uiShowMessage",this.showStickyMessage),']
 ]
