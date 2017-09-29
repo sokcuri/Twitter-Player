@@ -73,9 +73,9 @@ module.exports = function (mainWindow) {
                     click(item, focusedWindow) {
                         let url = new URL(focusedWindow.webContents.getURL());
                         if (url.host === 'mobile.twitter.com') {
-                            win.loadURL(url.origin);
+                            focusedWindow.loadURL(url.origin);
                         } else {
-                            win.loadURL('https://twitter.com/')
+                            focusedWindow.loadURL('https://twitter.com/')
                         }
                     }
                 },
