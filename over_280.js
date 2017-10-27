@@ -1,3 +1,3 @@
 [
-    ['']
+    ['Sokcuri','Sokcuri']
 ]
