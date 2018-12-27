@@ -72,6 +72,7 @@ module.exports = function (mainWindow) {
                     accelerator: 'CmdOrCtrl+G',
                     click(item, focusedWindow) {
                         let url = new URL(focusedWindow.webContents.getURL());
+                        focusedWindow.webContents.clearHistory()
                         if (url.host === 'mobile.twitter.com') {
                             focusedWindow.loadURL(url.origin);
                         } else {
@@ -210,14 +211,18 @@ module.exports = function (mainWindow) {
                     label: 'Back',
                     accelerator: (os.platform() === 'darwin' ? 'Command+Left' : 'Alt+Left'),
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.webContents.goBack()
+                        if (focusedWindow && focusedWindow.webContents.canGoBack()) {
+                            focusedWindow.webContents.goBack()
+                        }
                     }
                 },
                 {
                     label: 'Forward',
                     accelerator: (os.platform() === 'darwin' ? 'Command+Right' : 'Alt+Right'),
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.webContents.goForward()
+                        if (focusedWindow && focusedWindow.webContents.canGoForward()) {
+                            focusedWindow.webContents.goForward()
+                        }
                     }
                 },
                 {
@@ -227,7 +232,10 @@ module.exports = function (mainWindow) {
                     label: 'Reload',
                     accelerator: 'CmdOrCtrl+R',
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.reload();
+                        if (focusedWindow) {
+                            focusedWindow.webContents.reload()
+                            focusedWindow.webContents.clearHistory()
+                        }
                     },
                 },
                 {
