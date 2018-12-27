@@ -49,7 +49,10 @@ module.exports = function (mainWindow) {
                 {
                     label: 'Web Twitter Page',
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.loadURL('https://twitter.com/');
+                        if (focusedWindow) {
+                            focusedWindow.loadURL('https://twitter.com/');
+                            focusedWindow.webContents.clearHistory()
+                        }
                         config.load();
                         config.data.viewPageType = 'web';
                         config.save();
@@ -58,7 +61,10 @@ module.exports = function (mainWindow) {
                 {
                     label: 'Mobile Twitter Page',
                     click(item, focusedWindow) {
-                        if (focusedWindow) focusedWindow.loadURL('https://mobile.twitter.com/');
+                        if (focusedWindow) {
+                            focusedWindow.loadURL('https://mobile.twitter.com/');
+                            focusedWindow.webContents.clearHistory()
+                        }
                         config.load();
                         config.data.viewPageType = 'mobile';
                         config.save();
