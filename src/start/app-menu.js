@@ -137,7 +137,7 @@ module.exports = function (mainWindow) {
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('#search-query').focus()`, true);
                             focusedWindow.webContents.executeJavaScript(`document.querySelector('.DMActivity-close').click()`, true);
                         } else if (url.host === 'mobile.twitter.com') {
-                            focusedWindow.webContents.executeJavaScript(`document.querySelector('[href="/search"]').click()`, true);
+                            focusedWindow.webContents.executeJavaScript(`document.querySelector('[href="/explore"]').click()`, true);
                         }
                     },
                 },
